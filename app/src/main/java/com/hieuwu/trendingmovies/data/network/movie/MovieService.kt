@@ -4,5 +4,5 @@ import com.hieuwu.trendingmovies.data.network.movie.dto.MovieDto
 
 interface MovieService {
 
-    suspend fun getMovieList(): List<MovieDto>
+    suspend fun getMovieList(page: Int): List<MovieDto>
 }

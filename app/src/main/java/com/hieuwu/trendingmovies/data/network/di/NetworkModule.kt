@@ -17,7 +17,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/trending/movie/")
+            .baseUrl("https://api.themoviedb.org/3/trending")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
