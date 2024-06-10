@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Trending Movies</string>
+    <string name="trending_movies">Trending movies</string>
+    <string name="search_for_movies">Search for movies</string>
 </resources>
