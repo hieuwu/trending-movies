@@ -1,14 +1,14 @@
 package com.hieuwu.trendingmovies.data.network.movie.dto
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class MovieDto(
-    @SerializedName("id")
+    @Json(name = "id")
     val id: Int? = null,
-    @SerializedName("poster_path")
+    @Json(name = "poster_path")
     val posterPath: String? = null,
-    @SerializedName("title")
+    @Json(name = "title")
     val title: String? = null,
-    @SerializedName("vote_average")
+    @Json(name = "vote_average")
     val voteAverage: Double? = null,
 )
