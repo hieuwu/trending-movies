@@ -11,7 +11,8 @@ class TrendingMovieApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        plant(Timber.DebugTree())
-        Timber.tag("NetworkLogger").d("app started")
+        if (BuildConfig.DEBUG) {
+            plant(Timber.DebugTree())
+        }
     }
 }

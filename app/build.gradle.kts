@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -29,6 +31,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            val p = Properties()
+            p.load(project.rootProject.file("local.properties").reader())
+            val apiKey: String = p.getProperty("API_KEY")
+            buildConfigField("String", "API_KEY", apiKey)
+        }
+
+        debug {
+            val p = Properties()
+            p.load(project.rootProject.file("local.properties").reader())
+            val apiKey: String = p.getProperty("API_KEY")
+            buildConfigField("String", "API_KEY", apiKey)
         }
     }
     compileOptions {
@@ -40,6 +53,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
