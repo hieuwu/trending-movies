@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -97,13 +99,14 @@ fun MovieListScreen(
                 maxLines = 1,
                 shape = RoundedCornerShape(32),
                 modifier = modifier
-                    .padding(paddingValues)
-                    .padding(start = 16.dp, end = 16.dp, top = 24.dp)
                     .fillMaxWidth(),
                 value = searchQuery,
                 onValueChange = {
                     viewModel.onSearchQueryChange(it)
                 },
+                keyboardActions = KeyboardActions(
+                    onSearch = { viewModel.onSearchMovie() }
+                ),
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -121,29 +124,59 @@ fun MovieListScreen(
                     )
                 }
             )
-            Box(modifier = modifier.fillMaxSize()) {
-                if (movies.loadState.refresh is LoadState.Loading) {
-                    Text("Loading", modifier = modifier.fillMaxWidth())
-                } else {
-                    LazyColumn(
-                        modifier = modifier.fillMaxSize().padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        items(
-                            movies.itemCount,
-                            key = movies.itemKey { it.id }
-                        ) { index ->
-                            val movie = movies[index]
-                            if (movie != null) {
+            val searchMovie = viewModel.movies.collectAsState().value
+            if (searchMovie.isEmpty()) {
+                Box(modifier = modifier.fillMaxSize()) {
+                    if (movies.loadState.refresh is LoadState.Loading) {
+                        Text("Loading", modifier = modifier.fillMaxWidth())
+                    } else {
+                        LazyColumn(
+                            modifier = modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            items(
+                                movies.itemCount,
+                                key = movies.itemKey { it.id }
+                            ) { index ->
+                                val movie = movies[index]
+                                if (movie != null) {
+                                    MovieItem(
+                                        movie = movie,
+                                    )
+                                }
+                            }
+                            item {
+                                if (movies.loadState.append is LoadState.Loading) {
+                                    Text("Loading", modifier = modifier.fillMaxWidth())
+                                }
+                                if (movies.loadState.append.endOfPaginationReached) {
+                                    Text("End of page", modifier = modifier.fillMaxWidth())
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                Box(modifier = modifier.fillMaxSize()) {
+                    if (searchMovie.isEmpty()) {
+                        Text("Result not found", modifier = modifier.fillMaxWidth())
+                    } else {
+                        LazyColumn(
+                            modifier = modifier
+                                .fillMaxSize()
+                                .padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            items(
+                                searchMovie,
+                            ) { movie ->
                                 MovieItem(
                                     movie = movie,
                                 )
-                            }
-                        }
-                        item {
-                            if (movies.loadState.append is LoadState.Loading) {
-                                Text("Loading", modifier = modifier.fillMaxWidth())
                             }
                         }
                     }

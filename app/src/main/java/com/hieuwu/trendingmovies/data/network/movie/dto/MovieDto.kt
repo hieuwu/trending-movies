@@ -1,13 +1,12 @@
 package com.hieuwu.trendingmovies.data.network.movie.dto
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 data class MovieDto(
     @Json(name = "id")
     val id: Int,
     @Json(name = "poster_path")
-    val posterPath: String,
+    val posterPath: String? = null,
     @Json(name = "title")
     val title: String,
     @Json(name = "vote_average")

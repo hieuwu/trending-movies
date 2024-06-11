@@ -1,6 +1,5 @@
 package com.hieuwu.trendingmovies.data.network.movie.retrofit
 
-import com.hieuwu.trendingmovies.data.network.movie.dto.MovieDto
 import com.hieuwu.trendingmovies.data.network.movie.dto.MovieListDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -13,8 +12,10 @@ interface MovieRetrofitService {
         @Query("page") page: Int
     ): Response<MovieListDto>
 
-    @GET("/search/movie")
-    suspend fun searchMovieDefault(
+    @GET("search/movie")
+    suspend fun searchMovie(
         @Query("query") query: String,
+        @Query("language") language: String = "en-US",
+        @Query("include_adult") includeAdult: Boolean = false,
     ): Response<MovieListDto>
 }

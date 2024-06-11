@@ -11,4 +11,8 @@ internal class MovieRetrofitServiceImpl @Inject constructor(
     override suspend fun getMovieList(page: Int): List<MovieDto> {
         return movieRetrofitService.getMovieList(page = page).body()?.results ?: emptyList()
     }
+
+    override suspend fun searchMovie(query: String): List<MovieDto> {
+        return movieRetrofitService.searchMovie(query = query).body()?.results ?: emptyList()
+    }
 }

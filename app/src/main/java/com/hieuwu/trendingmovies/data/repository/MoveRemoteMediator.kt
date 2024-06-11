@@ -15,7 +15,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class MoveRemoteMediator @Inject constructor(
+internal class MoveRemoteMediator @Inject constructor(
     private val movieDatabase: TrendingMovieDatabase,
     private val movieService: MovieService
 ) : RemoteMediator<Int, MovieEntity>() {
@@ -31,12 +31,18 @@ class MoveRemoteMediator @Inject constructor(
                 LoadType.APPEND -> {
                     val lastItem = state.lastItemOrNull()
                     if (lastItem == null) {
+                        Timber.d("Last item index-0 Next page-1")
                         1
                     } else {
                         val lastIndex = movieDatabase.movieDao().size()
-                        val nextPage = (lastIndex / state.config.pageSize) + 1
-                        Timber.d("Last item index-$lastIndex Next page-$nextPage")
-                        nextPage
+                        if (lastIndex % 20 == 0) {
+                            val nextPage = (lastIndex / state.config.pageSize) + 1
+                            Timber.d("Last item index-$lastIndex Next page-$nextPage")
+                            nextPage
+                        } else {
+                            MediatorResult.Success(endOfPaginationReached = true)
+                            -1
+                        }
                     }
                 }
             }

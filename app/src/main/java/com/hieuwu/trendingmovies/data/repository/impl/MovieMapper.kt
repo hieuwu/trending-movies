@@ -7,7 +7,7 @@ import com.hieuwu.trendingmovies.domain.model.Movie
 
 fun MovieDto.toEntity() = MovieEntity(
     id = this.id,
-    posterPath = ImageUtil.buildImageUrl(this.posterPath),
+    posterPath = ImageUtil.buildImageUrl(this.posterPath ?: ""),
     title = this.title,
     voteAverage = this.voteAverage,
     releaseDate = this.releaseDate,
@@ -19,4 +19,12 @@ fun MovieEntity.toDomainModel() = Movie(
     title = this.title,
     voteAverage = this.voteAverage,
     releaseDate = this.releaseDate ?: "",
+)
+
+fun MovieDto.toDomainModel() = Movie(
+    id = this.id,
+    posterPath = this.posterPath,
+    title = this.title,
+    voteAverage = this.voteAverage,
+    releaseDate = this.releaseDate,
 )
