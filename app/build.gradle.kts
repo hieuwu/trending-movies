@@ -59,11 +59,19 @@ dependencies {
 
     implementation(libs.retrofit)
     implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
     implementation(libs.retrofit2.converter.moshi)
+    implementation(libs.logging.interceptor)
+    implementation(libs.timber)
 
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    kapt(libs.androidx.room.compiler)
+
+    // Paging
+    implementation(libs.androidx.paging.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -9,6 +9,6 @@ internal class MovieRetrofitServiceImpl @Inject constructor(
     private val movieRetrofitService: MovieRetrofitService
 ) : MovieService {
     override suspend fun getMovieList(page: Int): List<MovieDto> {
-        return movieRetrofitService.getMovieList(page = page).body() ?: emptyList()
+        return movieRetrofitService.getMovieList(page = page).body()?.results ?: emptyList()
     }
 }

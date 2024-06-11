@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,14 +18,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.hieuwu.trendingmovies.presentation.movielist.Movie
+import com.hieuwu.trendingmovies.domain.model.Movie
 
 @Composable
 fun MovieItem(
     modifier: Modifier = Modifier,
-    movie: Movie? = null
+    movie: Movie
 ) {
-    Card {
+    Card(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 10.dp
+        )
+    ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -44,11 +49,11 @@ fun MovieItem(
             ) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = "Title",
+                    text = movie.title,
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    modifier = modifier.fillMaxWidth(), text = "2024-05-16",
+                    modifier = modifier.fillMaxWidth(), text = movie.releaseDate,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
@@ -59,5 +64,13 @@ fun MovieItem(
 @Preview
 @Composable
 fun MovieItemPreview() {
-    MovieItem()
+    MovieItem(
+        movie = Movie(
+            id = 1,
+            posterPath = null,
+            title = "",
+            voteAverage = null,
+            releaseDate = ""
+        )
+    )
 }
