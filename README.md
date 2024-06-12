@@ -18,7 +18,7 @@ API_KEY="SUPPLIED_EXTERNALLY"
 ## 🛠️ Install
 Download installable APK at [Google Drive](https://drive.google.com/drive/folders/18tDZ5I6Hj7geDPPjsrOFbPBTopowZKEh?usp=sharing)
 
-## Libraries
+## 🚀 Libraries
 - Hilt: dependency injection
 - Coil: image loader
 - Jetpack Compose: UI development
