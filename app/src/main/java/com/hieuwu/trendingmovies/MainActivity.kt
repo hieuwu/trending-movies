@@ -42,16 +42,15 @@ class MainActivity : ComponentActivity() {
                                     animatedVisibilityScope = this
                                 )
                             }
-
                             composable(
                                 route = "${MovieDetailsDestination.route}/{${MovieDetailsDestination.movieId}}",
                                 arguments = MovieDetailsDestination.arguments
                             ) { navBackStackEntry ->
                                 val movieId =
                                     navBackStackEntry.arguments?.getInt(MovieDetailsDestination.movieId) ?: -1
-                                MovieDetailsScreen(movieId = movieId, navController = navController,
+                                MovieDetailsScreen(movieId = movieId,
+                                    navController = navController,
                                     animatedVisibilityScope = this
-
                                 )
                             }
                         }

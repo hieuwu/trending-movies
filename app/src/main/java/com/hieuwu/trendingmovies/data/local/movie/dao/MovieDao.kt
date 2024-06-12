@@ -26,4 +26,7 @@ interface MovieDao {
 
     @Upsert
     suspend fun upsert(movieDetails: MovieDetailsEntity)
+
+    @Query("DELETE FROM movie_details")
+    suspend fun clearAllMovieDetails()
 }

@@ -106,6 +106,8 @@ dependencies {
     implementation(libs.androidx.animation)
     implementation( libs.androidx.navigation.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    testImplementation (libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
 
 kapt {

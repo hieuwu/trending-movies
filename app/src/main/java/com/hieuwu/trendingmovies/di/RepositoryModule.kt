@@ -1,6 +1,8 @@
 package com.hieuwu.trendingmovies.di
 
+import com.hieuwu.trendingmovies.data.repository.CacheHistoryRepository
 import com.hieuwu.trendingmovies.data.repository.MovieRepository
+import com.hieuwu.trendingmovies.data.repository.impl.CacheHistoryRepositoryImpl
 import com.hieuwu.trendingmovies.data.repository.impl.MovieRepositoryImpl
 import dagger.Binds
 import dagger.Module
@@ -12,5 +14,8 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
     @Binds
     abstract fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
+
+    @Binds
+    abstract fun bindCacheHistory(impl: CacheHistoryRepositoryImpl): CacheHistoryRepository
 
 }

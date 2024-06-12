@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.hieuwu.trendingmovies.data.local.movie.TrendingMovieDatabase
+import com.hieuwu.trendingmovies.data.local.movie.dao.CacheHistoryDao
 import com.hieuwu.trendingmovies.data.local.movie.dao.MovieDao
 import com.hieuwu.trendingmovies.data.local.movie.entity.MovieEntity
 import com.hieuwu.trendingmovies.data.network.movie.MovieService
@@ -33,8 +34,15 @@ object DatabaseModule {
     }
 
     @Provides
+    @Singleton
     fun provideMovieDao(database: TrendingMovieDatabase): MovieDao {
         return database.movieDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCacheHistoryDao(database: TrendingMovieDatabase): CacheHistoryDao {
+        return database.cacheHistoryDao()
     }
 
     @OptIn(ExperimentalPagingApi::class)
