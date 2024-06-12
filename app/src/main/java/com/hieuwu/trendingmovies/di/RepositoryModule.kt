@@ -1,7 +1,5 @@
-package com.hieuwu.trendingmovies.data.repository.di
+package com.hieuwu.trendingmovies.di
 
-import com.hieuwu.trendingmovies.data.network.movie.impl.MovieRetrofitServiceImpl
-import com.hieuwu.trendingmovies.data.network.movie.retrofit.MovieRetrofitService
 import com.hieuwu.trendingmovies.data.repository.MovieRepository
 import com.hieuwu.trendingmovies.data.repository.impl.MovieRepositoryImpl
 import dagger.Binds

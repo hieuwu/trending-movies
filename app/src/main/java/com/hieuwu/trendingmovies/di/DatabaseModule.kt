@@ -1,4 +1,4 @@
-package com.hieuwu.trendingmovies.data.local.di
+package com.hieuwu.trendingmovies.di
 
 import android.content.Context
 import androidx.paging.ExperimentalPagingApi

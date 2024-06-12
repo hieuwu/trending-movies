@@ -1,5 +1,8 @@
 package com.hieuwu.trendingmovies.presentation.movielist
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,11 +48,12 @@ import com.hieuwu.trendingmovies.presentation.movielist.composable.MovieItem
 import com.hieuwu.trendingmovies.presentation.navigation.MovieDetailsDestination
 import com.hieuwu.trendingmovies.presentation.navigation.navigateSingleTopTo
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun MovieListScreen(
+fun SharedTransitionScope.MovieListScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     viewModel: MovieListViewModel = hiltViewModel(),
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
@@ -120,7 +124,7 @@ fun MovieListScreen(
                     if (movies.loadState.refresh is LoadState.Loading) {
                         Text(stringResource(R.string.loading), modifier = modifier.fillMaxWidth())
                     } else {
-                        if (movies.loadState.refresh is LoadState.Error) {
+                        if ( movies.itemCount == 0) {
                             Text("Error loading trending movies", modifier = modifier.fillMaxWidth())
                         } else {
                             LazyColumn(
@@ -144,7 +148,8 @@ fun MovieListScreen(
                                                         movie.id
                                                     )
                                                 )
-                                            }
+                                            },
+                                            animatedVisibilityScope = animatedVisibilityScope
                                         )
                                     }
                                 }
@@ -182,7 +187,8 @@ fun MovieListScreen(
                                         navController.navigateSingleTopTo(
                                             MovieDetailsDestination.createRouteWithParam(movie.id)
                                         )
-                                    }
+                                    },
+                                    animatedVisibilityScope = animatedVisibilityScope
                                 )
                             }
                         }

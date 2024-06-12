@@ -1,5 +1,9 @@
 package com.hieuwu.trendingmovies.presentation.moviedetails
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,13 +45,14 @@ import coil.request.ImageRequest
 import coil.util.DebugLogger
 import com.hieuwu.trendingmovies.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
-fun MovieDetailsScreen(
+fun SharedTransitionScope.MovieDetailsScreen(
     modifier: Modifier = Modifier,
     movieId: Int,
     viewModel: MovieDetailsViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    animatedVisibilityScope: AnimatedVisibilityScope,
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     Scaffold(
@@ -92,7 +97,14 @@ fun MovieDetailsScreen(
                     modifier = modifier
                         .fillMaxWidth()
                         .height(256.dp)
-                        .clip(shape = RoundedCornerShape(8)),
+                        .clip(shape = RoundedCornerShape(8))
+                        .sharedElement(
+                            state = rememberSharedContentState(key = "image/${movieDetails.backdropPath}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ ->
+                                tween(durationMillis = 1000)
+                            }
+                        ),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(movieDetails.backdropPath)
                         .crossfade(true)
@@ -103,7 +115,17 @@ fun MovieDetailsScreen(
                     imageLoader = imageLoader
                 )
                 Spacer(modifier = modifier.height(12.dp))
-                Text(text = movieDetails.title ?: "", style = MaterialTheme.typography.titleMedium)
+                Text(text = movieDetails.title ?: "", style = MaterialTheme.typography.titleMedium,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .sharedElement(
+                            state = rememberSharedContentState(key = "text/${movieDetails.title}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ ->
+                                tween(durationMillis = 1000)
+                            }
+                        )
+                )
                 Spacer(modifier = modifier.height(12.dp))
                 val uriHandler = LocalUriHandler.current
                 Text(
@@ -119,13 +141,29 @@ fun MovieDetailsScreen(
                 )
                 Spacer(modifier = modifier.height(12.dp))
                 Text(
-                    modifier = modifier.fillMaxWidth(),
-                    text = "Release date: ${movieDetails.releaseDate ?: "N/A"}",
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .sharedElement(
+                            state = rememberSharedContentState(key = "text/${movieDetails.releaseDate}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ ->
+                                tween(durationMillis = 1000)
+                            }
+                        ),
+                    text = TextUtil.buildReleaseDate(movieDetails.releaseDate ?: "N/A"),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
-                    modifier = modifier.fillMaxWidth(),
-                    text = "Vote average: ${movieDetails.voteAverage ?: 0.0}",
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .sharedElement(
+                            state = rememberSharedContentState(key = "text/${movieDetails.voteAverage}"),
+                            animatedVisibilityScope = animatedVisibilityScope,
+                            boundsTransform = { _, _ ->
+                                tween(durationMillis = 1000)
+                            }
+                        ),
+                    text = TextUtil.buildVoteAverage(movieDetails.voteAverage ?: 0.0),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = modifier.height(12.dp))
@@ -142,4 +180,10 @@ fun MovieDetailsScreen(
             )
         }
     }
+}
+
+object TextUtil {
+    fun buildVoteAverage(vote: Double): String = "Vote average: $vote"
+    fun buildReleaseDate(date: String): String = "Release date: $date"
+
 }

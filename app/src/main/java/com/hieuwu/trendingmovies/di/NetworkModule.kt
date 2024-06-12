@@ -1,4 +1,4 @@
-package com.hieuwu.trendingmovies.data.network.di
+package com.hieuwu.trendingmovies.di
 
 import com.hieuwu.trendingmovies.BuildConfig
 import com.hieuwu.trendingmovies.data.network.movie.MovieService
