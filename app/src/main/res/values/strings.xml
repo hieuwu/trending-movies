@@ -2,4 +2,7 @@
     <string name="app_name">Trending Movies</string>
     <string name="trending_movies">Trending movies</string>
     <string name="search_for_movies">Search for movies</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="loading">Loading</string>
+    <string name="error_loading_trending_movies">Error loading trending movies</string>
 </resources>

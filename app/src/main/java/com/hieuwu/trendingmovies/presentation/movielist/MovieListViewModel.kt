@@ -15,13 +15,16 @@ import javax.inject.Inject
 class MovieListViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : ViewModel() {
-    val moviePagingFlow = movieRepository.getTrendingMovies().cachedIn(viewModelScope)
+    val trendingMovies = movieRepository.getTrendingMovies().cachedIn(viewModelScope)
+
+    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.Trending)
+    val screenState: StateFlow<ScreenState> = _screenState
 
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query
 
-    private val _movies = MutableStateFlow<List<Movie>>(emptyList())
-    val movies: StateFlow<List<Movie>> = _movies
+    private val _searchedMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val searchedMovie: StateFlow<List<Movie>> = _searchedMovies
 
     fun onSearchQueryChange(query: String) {
         _query.value = query
@@ -29,16 +32,18 @@ class MovieListViewModel @Inject constructor(
 
     fun onSearchMovie() {
         if (_query.value.isEmpty()) {
-
+            _searchedMovies.value = emptyList()
+            _screenState.value = ScreenState.Trending
         } else {
             searchMovie()
+            _screenState.value = ScreenState.Search
         }
     }
 
     private fun searchMovie() {
         viewModelScope.launch {
             val movieList = movieRepository.searchMovie(_query.value)
-            _movies.emit(movieList)
+            _searchedMovies.emit(movieList)
         }
     }
 }

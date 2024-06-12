@@ -23,7 +23,7 @@ fun MovieEntity.toDomainModel() = Movie(
 
 fun MovieDto.toDomainModel() = Movie(
     id = this.id,
-    posterPath = this.posterPath,
+    posterPath = ImageUtil.buildImageUrl(this.posterPath ?: ""),
     title = this.title,
     voteAverage = this.voteAverage,
     releaseDate = this.releaseDate,

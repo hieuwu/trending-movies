@@ -6,7 +6,7 @@ data class MovieListDto(
     @Json(name="page")
     val page: Int? = null,
     @Json(name="results")
-    val results: List<MovieDto>,
+    val results: List<MovieDto>? = listOf(),
     @Json(name="total_pages")
     val totalPages: Int? = null,
     @Json(name="total_results")
