@@ -94,17 +94,17 @@ fun SharedTransitionScope.MovieDetailsScreen(
                     .logger(DebugLogger())
                     .build()
                 AsyncImage(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(256.dp)
-                        .clip(shape = RoundedCornerShape(8))
+                    modifier = Modifier
                         .sharedElement(
-                            state = rememberSharedContentState(key = "image/${movieDetails.backdropPath}"),
+                            state = rememberSharedContentState(key = "image/${movieId}"),
                             animatedVisibilityScope = animatedVisibilityScope,
                             boundsTransform = { _, _ ->
                                 tween(durationMillis = 1000)
                             }
-                        ),
+                        )
+                        .fillMaxWidth()
+                        .height(256.dp)
+                        .clip(shape = RoundedCornerShape(8)),
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(movieDetails.backdropPath)
                         .crossfade(true)

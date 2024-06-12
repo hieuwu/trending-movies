@@ -56,19 +56,18 @@ fun SharedTransitionScope.MovieItem(
                 .padding(12.dp)
         ) {
             AsyncImage(
-                modifier = modifier
-                    .width(80.dp)
-                    .height(120.dp)
-                    .clip(shape = RoundedCornerShape(8))
-                    .aspectRatio(16 / 9f)
-                    .weight(1f)
+                modifier = Modifier
                     .sharedElement(
-                        state = rememberSharedContentState(key = "image/${movie.backdropPath}"),
+                        state = rememberSharedContentState(key = "image/${movie.id}"),
                         animatedVisibilityScope = animatedVisibilityScope,
                         boundsTransform = { _, _ ->
                             tween(durationMillis = 1000)
                         }
-                    ),
+                    )
+                    .height(120.dp)
+                    .clip(shape = RoundedCornerShape(8))
+                    .aspectRatio(16 / 9f)
+                    .weight(1f),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(movie.backdropPath)
                     .crossfade(true)
