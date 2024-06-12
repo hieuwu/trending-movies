@@ -7,7 +7,7 @@ An Android app with trending movies of today for infinite scrolling, built with 
 - View movie details, with animation, implemented with SharedElement
 - Offline mode: browse and view movie information without network
 
-## 🎥 Video⚙
+## 🎥 Video
 https://github.com/hieuwu/trending-movies/assets/43868345/15a049d2-78cd-4a7c-98d1-8dd2e88fbc9a
 
 ## ⚙️ Setup
